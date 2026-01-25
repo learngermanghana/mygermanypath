@@ -29,7 +29,7 @@ export default function Planner() {
       <header>
         <h1 className="text-3xl font-bold">Germany Pathway Planner</h1>
         <p className="mt-2 text-gray-600">
-          Get clarity in minutes. Free basic result â†’ Paid detailed plan.
+          Get clarity in minutes. Free basic result → Paid detailed plan.
         </p>
       </header>
 
