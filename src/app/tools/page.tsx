@@ -5,20 +5,26 @@ export default function Tools() {
     {
       title: "Germany Pathway Planner",
       desc: "Free → Paid detailed plan. Find your best route fast.",
+      valuePromise: "Takes 5 min to get your first route.",
       price: "Starting at $9",
       href: "/tools/pathway-planner",
+      cta: "Start planning →",
     },
     {
       title: "Readiness Test",
       desc: "Are you actually ready for Ausbildung / Study?",
+      valuePromise: "Answer 12 questions to see your score.",
       price: "Starting at $5",
       href: "/tools/readiness-test",
+      cta: "Take the test →",
     },
     {
       title: "CV & Motivation Builder",
       desc: "Guided tool to build your CV and motivation letter.",
+      valuePromise: "Instant PDF-ready draft in one session.",
       price: "Starting at $12",
       href: "/tools/cv-builder",
+      cta: "Build your CV →",
     },
   ];
 
@@ -31,7 +37,11 @@ export default function Tools() {
 
       <div className="grid gap-4 md:grid-cols-3">
         {tools.map((t) => (
-          <Link key={t.title} href={t.href} className="rounded-3xl border p-6 hover:bg-gray-50">
+          <Link
+            key={t.title}
+            href={t.href}
+            className="rounded-3xl border p-6 transition hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+          >
             <div className="flex items-start justify-between gap-3">
               <p className="text-lg font-bold">{t.title}</p>
               <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700">
@@ -39,7 +49,8 @@ export default function Tools() {
               </span>
             </div>
             <p className="mt-2 text-sm text-gray-600">{t.desc}</p>
-            <p className="mt-4 text-sm font-semibold">Open →</p>
+            <p className="mt-2 text-sm text-gray-500">{t.valuePromise}</p>
+            <p className="mt-4 text-sm font-semibold text-blue-600">{t.cta}</p>
           </Link>
         ))}
       </div>
