@@ -1,8 +1,8 @@
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 
 export const dynamic = "force-dynamic";
 
-const ChecklistClient = dynamic(() => import("./ChecklistClient"), {
+const ChecklistClient = dynamicImport(() => import("./ChecklistClient"), {
   ssr: false,
 });
 

@@ -1,8 +1,8 @@
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 
 export const dynamic = "force-dynamic";
 
-const MotivationClient = dynamic(() => import("./MotivationClient"), {
+const MotivationClient = dynamicImport(() => import("./MotivationClient"), {
   ssr: false,
 });
 

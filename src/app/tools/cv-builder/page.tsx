@@ -1,8 +1,8 @@
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 
 export const dynamic = "force-dynamic";
 
-const CVBuilderClient = dynamic(() => import("./CVBuilderClient"), {
+const CVBuilderClient = dynamicImport(() => import("./CVBuilderClient"), {
   ssr: false,
 });
 
