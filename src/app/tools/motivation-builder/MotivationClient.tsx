@@ -132,11 +132,26 @@ export default function MotivationBuilderPage() {
 
   return (
     <div className="space-y-10">
-      <header className="space-y-2">
-        <h1 className="text-3xl font-bold">Motivation Letter Builder</h1>
-        <p className="text-gray-600">
-          Fill your story → Pay with Paystack → Download PDF.
+      <header className="space-y-3">
+        <span className="inline-flex w-fit items-center rounded-full bg-black px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+          Motivation Letter Builder
+        </span>
+        <h1 className="text-3xl font-bold">Write a strong, Germany-ready motivation letter</h1>
+        <p className="max-w-2xl text-gray-600">
+          Answer the prompts, preview your letter instantly, and download a clean PDF once payment is verified.
         </p>
+        <div className="grid gap-3 md:grid-cols-3">
+          {[
+            { title: "Tell your story", desc: "Capture your goals, path, and strengths with guided prompts." },
+            { title: "Preview instantly", desc: "See the letter update live as you type." },
+            { title: "Download PDF", desc: "Pay with Paystack to unlock a polished PDF." },
+          ].map((item) => (
+            <div key={item.title} className="rounded-2xl border bg-white p-4 text-sm">
+              <p className="font-semibold">{item.title}</p>
+              <p className="mt-1 text-gray-600">{item.desc}</p>
+            </div>
+          ))}
+        </div>
       </header>
 
       {!!message && (
@@ -147,36 +162,78 @@ export default function MotivationBuilderPage() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         {/* FORM */}
-        <section className="rounded-3xl border p-6 space-y-5">
-          <h2 className="text-lg font-bold">Your Details</h2>
-
-          <Input label="Full Name" value={form.fullName} onChange={(v) => update("fullName", v)} />
-          <Input label="Email (required for Paystack)" value={form.email} onChange={(v) => update("email", v)} />
-          <Input label="Phone" value={form.phone} onChange={(v) => update("phone", v)} />
-          <Input label="Nationality" value={form.nationality} onChange={(v) => update("nationality", v)} />
-          <Input label="City" value={form.city} onChange={(v) => update("city", v)} />
-
-          <div className="grid gap-3 md:grid-cols-2">
-            <Select
-              label="Path"
-              value={form.path}
-              onChange={(v) => update("path", v as PathType)}
-              options={["Ausbildung", "Study", "Work"]}
-            />
-            <Input label="German Level" value={form.germanLevel} onChange={(v) => update("germanLevel", v)} />
+        <section className="rounded-3xl border p-6 space-y-6">
+          <div className="space-y-1">
+            <h2 className="text-lg font-bold">Your Details</h2>
+            <p className="text-sm text-gray-600">These details appear in the greeting and closing lines.</p>
           </div>
 
-          <Input
-            label="Target program / job"
-            value={form.targetProgram}
-            onChange={(v) => update("targetProgram", v)}
-          />
+          <div className="space-y-4">
+            <Input label="Full Name" value={form.fullName} onChange={(v) => update("fullName", v)} helper="Match your passport or official ID." />
+            <Input label="Email (required for Paystack)" value={form.email} onChange={(v) => update("email", v)} helper="Use an email you check often." />
+            <Input label="Phone" value={form.phone} onChange={(v) => update("phone", v)} helper="Include country code." />
+            <Input label="Nationality" value={form.nationality} onChange={(v) => update("nationality", v)} />
+            <Input label="City" value={form.city} onChange={(v) => update("city", v)} />
+          </div>
 
-          <Textarea label="Why Germany?" value={form.whyGermany} onChange={(v) => update("whyGermany", v)} />
-          <Textarea label="Why this path?" value={form.whyThisPath} onChange={(v) => update("whyThisPath", v)} />
-          <Textarea label="Your experience" value={form.experience} onChange={(v) => update("experience", v)} />
-          <Textarea label="Your strengths" value={form.strengths} onChange={(v) => update("strengths", v)} />
-          <Textarea label="Timeline" value={form.timeline} onChange={(v) => update("timeline", v)} />
+          <div className="space-y-3">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500">Target</h3>
+            <div className="grid gap-3 md:grid-cols-2">
+              <Select
+                label="Path"
+                value={form.path}
+                onChange={(v) => update("path", v as PathType)}
+                options={["Ausbildung", "Study", "Work"]}
+              />
+              <Input label="German Level" value={form.germanLevel} onChange={(v) => update("germanLevel", v)} helper="Example: A2/B1." />
+            </div>
+
+            <Input
+              label="Target program / job"
+              value={form.targetProgram}
+              onChange={(v) => update("targetProgram", v)}
+              helper="Be specific so the letter feels focused."
+            />
+          </div>
+
+          <div className="space-y-3">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-500">Your Motivation</h3>
+            <Textarea
+              label="Why Germany?"
+              value={form.whyGermany}
+              onChange={(v) => update("whyGermany", v)}
+              helper="Highlight training quality, career growth, or culture fit."
+              maxLength={320}
+            />
+            <Textarea
+              label="Why this path?"
+              value={form.whyThisPath}
+              onChange={(v) => update("whyThisPath", v)}
+              helper="Connect this path to your personal goals."
+              maxLength={320}
+            />
+            <Textarea
+              label="Your experience"
+              value={form.experience}
+              onChange={(v) => update("experience", v)}
+              helper="Mention relevant work, volunteering, or studies."
+              maxLength={320}
+            />
+            <Textarea
+              label="Your strengths"
+              value={form.strengths}
+              onChange={(v) => update("strengths", v)}
+              helper="List 4–6 strengths employers value."
+              maxLength={260}
+            />
+            <Textarea
+              label="Timeline"
+              value={form.timeline}
+              onChange={(v) => update("timeline", v)}
+              helper="Share when you can start or arrive in Germany."
+              maxLength={200}
+            />
+          </div>
 
           <div className="rounded-2xl bg-black p-5 text-white">
             <p className="font-semibold">Download PDF requires payment</p>
@@ -204,11 +261,23 @@ export default function MotivationBuilderPage() {
 
         {/* PREVIEW */}
         <section className="rounded-3xl border p-6 space-y-4">
-          <h2 className="text-lg font-bold">Preview</h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-bold">Preview</h2>
+            <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">Auto-updated</span>
+          </div>
           <div className="rounded-2xl border bg-white p-6 shadow-sm">
             <pre className="whitespace-pre-wrap text-sm leading-6 text-gray-800">
 {letterText}
             </pre>
+          </div>
+          <div className="rounded-2xl border bg-gray-50 p-4 text-sm text-gray-700">
+            <p className="font-semibold text-gray-900">Quick quality checklist</p>
+            <ul className="mt-2 list-disc space-y-1 pl-5">
+              <li>Keep each paragraph focused on one idea.</li>
+              <li>Match the role or program name exactly.</li>
+              <li>Keep the tone respectful and confident.</li>
+              <li>Confirm your timeline is realistic.</li>
+            </ul>
           </div>
         </section>
       </div>
@@ -250,20 +319,57 @@ Email: ${f.email}
 `;
 }
 
-function Input({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
+function Input({
+  label,
+  value,
+  onChange,
+  helper,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  helper?: string;
+}) {
   return (
     <div>
       <label className="text-sm font-semibold">{label}</label>
       <input value={value} onChange={(e) => onChange(e.target.value)} className="mt-2 w-full rounded-xl border px-3 py-2" />
+      {helper ? <p className="mt-1 text-xs text-gray-500">{helper}</p> : null}
     </div>
   );
 }
 
-function Textarea({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
+function Textarea({
+  label,
+  value,
+  onChange,
+  helper,
+  maxLength,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  helper?: string;
+  maxLength?: number;
+}) {
   return (
     <div>
-      <label className="text-sm font-semibold">{label}</label>
-      <textarea value={value} onChange={(e) => onChange(e.target.value)} className="mt-2 w-full rounded-xl border px-3 py-2" rows={4} />
+      <div className="flex items-center justify-between">
+        <label className="text-sm font-semibold">{label}</label>
+        {maxLength ? (
+          <span className="text-xs text-gray-400">
+            {value.length}/{maxLength}
+          </span>
+        ) : null}
+      </div>
+      <textarea
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="mt-2 w-full rounded-xl border px-3 py-2"
+        rows={4}
+        maxLength={maxLength}
+      />
+      {helper ? <p className="mt-1 text-xs text-gray-500">{helper}</p> : null}
     </div>
   );
 }
