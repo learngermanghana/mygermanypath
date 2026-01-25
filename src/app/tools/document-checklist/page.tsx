@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import dynamic from "next/dynamic";
+import nextDynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 import ChecklistPdf from "./pdf";
 
@@ -9,7 +9,7 @@ const PRICE_GHS = 40;
 
 export const dynamic = "force-dynamic";
 
-const PDFDownloadLink = dynamic(
+const PDFDownloadLink = nextDynamic(
   () => import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
   { ssr: false },
 );
