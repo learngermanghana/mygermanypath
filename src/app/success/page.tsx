@@ -8,7 +8,7 @@
 
       <div className="grid gap-4 md:grid-cols-3">
         {[
-          "Started A1 â†’ now A2",
+          "Started A1 → now A2",
           "Preparing documents for Ausbildung",
           "Booked guidance + improved motivation letter",
         ].map((s) => (
