@@ -1,10 +1,8 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-
 import { useEffect, useMemo, useState } from "react";
+import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 import CVPdf from "./pdf";
 
 type Education = { school: string; program: string; period: string };
@@ -26,6 +24,13 @@ type CVData = {
 };
 
 const PRICE_GHS = 50; // 🔥 change your price here
+
+export const dynamic = "force-dynamic";
+
+const PDFDownloadLink = dynamic(
+  () => import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
+  { ssr: false },
+);
 
 export default function CVBuilderPage() {
   const searchParams = useSearchParams();

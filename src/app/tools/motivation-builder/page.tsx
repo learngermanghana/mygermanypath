@@ -1,11 +1,18 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 import MotivationPdf from "./pdf";
 
 const PRICE_GHS = 60;
+
+export const dynamic = "force-dynamic";
+
+const PDFDownloadLink = dynamic(
+  () => import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
+  { ssr: false },
+);
 
 type PathType = "Ausbildung" | "Study" | "Work";
 
