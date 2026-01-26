@@ -43,6 +43,8 @@ const TEMPLATE_CONFIG: Record<Template, { accent: string; heading: string; divid
   Minimal: { accent: "#4b5563", heading: "#111827", divider: "#e5e7eb" },
 };
 
+type Styles = ReturnType<typeof getStyles>;
+
 export default function CVPdf({ data, template = "Classic" }: { data: CVData; template?: Template }) {
   const styles = getStyles(template);
 
@@ -58,11 +60,11 @@ export default function CVPdf({ data, template = "Classic" }: { data: CVData; te
           </Text>
         </View>
 
-        <Section title="Summary">
+        <Section title="Summary" styles={styles}>
           <Text style={styles.text}>{data.summary}</Text>
         </Section>
 
-        <Section title="Skills">
+        <Section title="Skills" styles={styles}>
           <View style={styles.rowWrap}>
             {data.skills.map((s) => (
               <Text key={s} style={styles.tag}>
@@ -72,7 +74,7 @@ export default function CVPdf({ data, template = "Classic" }: { data: CVData; te
           </View>
         </Section>
 
-        <Section title="Languages">
+        <Section title="Languages" styles={styles}>
           {data.languages.map((l) => (
             <Text key={l} style={styles.bullet}>
               • {l}
@@ -80,7 +82,7 @@ export default function CVPdf({ data, template = "Classic" }: { data: CVData; te
           ))}
         </Section>
 
-        <Section title="Education">
+        <Section title="Education" styles={styles}>
           {data.education.map((e, i) => (
             <View key={i} style={styles.item}>
               <Text style={styles.bold}>{e.school}</Text>
@@ -91,7 +93,7 @@ export default function CVPdf({ data, template = "Classic" }: { data: CVData; te
           ))}
         </Section>
 
-        <Section title="Experience">
+        <Section title="Experience" styles={styles}>
           {data.experience.map((ex, i) => (
             <View key={i} style={styles.item}>
               <Text style={styles.bold}>
@@ -108,7 +110,7 @@ export default function CVPdf({ data, template = "Classic" }: { data: CVData; te
         </Section>
 
         {data.certificates.length > 0 && (
-          <Section title="Certificates">
+          <Section title="Certificates" styles={styles}>
             {data.certificates.map((c) => (
               <Text key={c} style={styles.bullet}>
                 • {c}
@@ -124,9 +126,11 @@ export default function CVPdf({ data, template = "Classic" }: { data: CVData; te
 function Section({
   title,
   children,
+  styles,
 }: {
   title: string;
   children: React.ReactNode;
+  styles: Styles;
 }) {
   return (
     <View style={styles.section}>
