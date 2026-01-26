@@ -35,7 +35,17 @@ type CVData = {
   certificates: string[];
 };
 
-export default function CVPdf({ data }: { data: CVData }) {
+type Template = "Classic" | "Modern" | "Minimal";
+
+const TEMPLATE_CONFIG: Record<Template, { accent: string; heading: string; divider: string }> = {
+  Classic: { accent: "#111827", heading: "#111827", divider: "#e5e7eb" },
+  Modern: { accent: "#0f766e", heading: "#0f172a", divider: "#cbd5f5" },
+  Minimal: { accent: "#4b5563", heading: "#111827", divider: "#e5e7eb" },
+};
+
+export default function CVPdf({ data, template = "Classic" }: { data: CVData; template?: Template }) {
+  const styles = getStyles(template);
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -126,45 +136,51 @@ function Section({
   );
 }
 
-const styles = StyleSheet.create({
-  page: {
-    padding: 28,
-    fontSize: 10.5,
-    fontFamily: "Helvetica",
-    lineHeight: 1.35,
-  },
+function getStyles(template: Template) {
+  const palette = TEMPLATE_CONFIG[template];
 
-  header: {
-    paddingBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e5e7eb",
-    marginBottom: 12,
-  },
+  return StyleSheet.create({
+    page: {
+      padding: 28,
+      fontSize: 10.5,
+      fontFamily: "Helvetica",
+      lineHeight: 1.35,
+      color: "#0f172a",
+    },
 
-  name: { fontSize: 18, fontWeight: 700 },
-  title: { fontSize: 11, marginTop: 2, color: "#374151" },
-  contact: { fontSize: 9.5, marginTop: 5, color: "#4b5563" },
+    header: {
+      paddingBottom: 10,
+      borderBottomWidth: 1,
+      borderBottomColor: palette.divider,
+      marginBottom: 12,
+    },
 
-  section: { marginTop: 10 },
-  sectionTitle: { fontSize: 11, fontWeight: 700, marginBottom: 5 },
+    name: { fontSize: 18, fontWeight: 700, color: palette.heading },
+    title: { fontSize: 11, marginTop: 2, color: palette.accent },
+    contact: { fontSize: 9.5, marginTop: 5, color: "#4b5563" },
 
-  item: { marginBottom: 6 },
+    section: { marginTop: 10 },
+    sectionTitle: { fontSize: 11, fontWeight: 700, marginBottom: 5, color: palette.heading },
 
-  text: { color: "#111827" },
-  muted: { color: "#6b7280", marginTop: 2 },
+    item: { marginBottom: 6 },
 
-  bold: { fontWeight: 700 },
+    text: { color: "#111827" },
+    muted: { color: "#6b7280", marginTop: 2 },
 
-  bullet: { marginLeft: 8, marginTop: 2, color: "#111827" },
+    bold: { fontWeight: 700, color: palette.heading },
 
-  rowWrap: { flexDirection: "row", flexWrap: "wrap", gap: 6 },
+    bullet: { marginLeft: 8, marginTop: 2, color: "#111827" },
 
-  tag: {
-    fontSize: 9.5,
-    borderWidth: 1,
-    borderColor: "#d1d5db",
-    paddingVertical: 3,
-    paddingHorizontal: 6,
-    borderRadius: 999,
-  },
-});
+    rowWrap: { flexDirection: "row", flexWrap: "wrap", gap: 6 },
+
+    tag: {
+      fontSize: 9.5,
+      borderWidth: 1,
+      borderColor: palette.divider,
+      color: palette.accent,
+      paddingVertical: 3,
+      paddingHorizontal: 6,
+      borderRadius: 999,
+    },
+  });
+}
