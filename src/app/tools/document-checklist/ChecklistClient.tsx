@@ -47,6 +47,8 @@ export default function DocumentChecklistPage() {
   const [checking, setChecking] = useState(false);
   const [paying, setPaying] = useState(false);
   const [message, setMessage] = useState("");
+  const [saveMessage, setSaveMessage] = useState("");
+  const [saving, setSaving] = useState(false);
 
   const [form, setForm] = useState<FormData>({
     fullName: "Felix Asadu",
@@ -116,6 +118,41 @@ export default function DocumentChecklistPage() {
     window.location.href = json.authorization_url;
   }
 
+  async function saveAccountDetails() {
+    if (!form.email.includes("@")) {
+      setSaveMessage("⚠️ Please enter a valid email before saving.");
+      return;
+    }
+
+    setSaving(true);
+    setSaveMessage("Saving your details…");
+
+    const res = await fetch("/api/account/save", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: form.email,
+        fullName: form.fullName,
+        phone: form.phone,
+        source: "document-checklist",
+        formData: form,
+      }),
+    });
+
+    const json = await res.json();
+
+    if (!json?.ok) {
+      setSaveMessage(
+        json?.error ? `❌ Save failed: ${json.error}` : "❌ Save failed. Please try again.",
+      );
+      setSaving(false);
+      return;
+    }
+
+    setSaveMessage("✅ Saved! We will remember your details for future sessions.");
+    setSaving(false);
+  }
+
   function update<K extends keyof FormData>(key: K, value: FormData[K]) {
     setForm((p) => ({ ...p, [key]: value }));
   }
@@ -169,6 +206,21 @@ export default function DocumentChecklistPage() {
             value={form.timelineMonths}
             onChange={(v) => update("timelineMonths", v)}
           />
+
+          <div className="rounded-2xl border bg-white p-4 text-sm">
+            <p className="font-semibold">Save your details</p>
+            <p className="mt-1 text-gray-600">
+              Store your account info securely so we can prefill it next time.
+            </p>
+            <button
+              onClick={saveAccountDetails}
+              disabled={saving}
+              className="mt-3 w-full rounded-xl bg-black px-4 py-2 font-semibold text-white hover:opacity-90 disabled:opacity-60"
+            >
+              {saving ? "Saving..." : "Save my details"}
+            </button>
+            {!!saveMessage && <p className="mt-2 text-sm text-gray-600">{saveMessage}</p>}
+          </div>
 
           <div className="rounded-2xl bg-black p-5 text-white">
             <p className="font-semibold">Download PDF requires payment</p>
