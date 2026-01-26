@@ -29,6 +29,16 @@ type FormData = {
   timelineMonths: string;
 };
 
+type ChecklistData = {
+  title: string;
+  items: string[];
+  timeline: string;
+  mistakes: string[];
+  optionsTitle: string | null;
+  optionsNote: string | null;
+  options: string[];
+};
+
 export default function DocumentChecklistPage() {
   const searchParams = useSearchParams();
   const reference = searchParams.get("reference");
@@ -199,6 +209,19 @@ export default function DocumentChecklistPage() {
               </ul>
             </Block>
 
+            {checklist.options.length > 0 && checklist.optionsTitle && (
+              <Block title={checklist.optionsTitle}>
+                {checklist.optionsNote && (
+                  <p className="text-sm text-gray-600">{checklist.optionsNote}</p>
+                )}
+                <ul className="mt-2 list-disc pl-5 text-sm text-gray-700 space-y-1">
+                  {checklist.options.map((x) => (
+                    <li key={x}>{x}</li>
+                  ))}
+                </ul>
+              </Block>
+            )}
+
             <Block title="Timeline">
               <p className="text-sm text-gray-700">{checklist.timeline}</p>
             </Block>
@@ -217,7 +240,7 @@ export default function DocumentChecklistPage() {
   );
 }
 
-function buildChecklist(form: FormData) {
+function buildChecklist(form: FormData): ChecklistData {
   const title = `${form.path} — Document Checklist`;
 
   const base = [
@@ -267,7 +290,187 @@ function buildChecklist(form: FormData) {
     "No clear plan for money + timeline",
   ];
 
-  return { title, items, timeline, mistakes };
+  const ausbildungOptions = [
+    "Healthcare & Social Care: Pflegefachmann / Pflegefachfrau (Nursing)",
+    "Healthcare & Social Care: Medizinische/r Fachangestellte/r (MFA) (Medical assistant)",
+    "Healthcare & Social Care: Zahnmedizinische/r Fachangestellte/r (ZFA) (Dental assistant)",
+    "Healthcare & Social Care: Pharmazeutisch-kaufmännische/r Angestellte/r (PKA) (Pharmacy assistant)",
+    "Healthcare & Social Care: Notfallsanitäter/in (Paramedic)",
+    "Healthcare & Social Care: Erzieher/in (Educator / kindergarten teacher)",
+    "Healthcare & Social Care: Heilerziehungspfleger/in (Care for people with disabilities)",
+    "IT & Technology: Fachinformatiker/in – Anwendungsentwicklung (Software development)",
+    "IT & Technology: Fachinformatiker/in – Systemintegration (IT systems & networks)",
+    "IT & Technology: Fachinformatiker/in – Daten- und Prozessanalyse (Data/process analysis)",
+    "IT & Technology: IT-System-Elektroniker/in (IT electronics technician)",
+    "IT & Technology: Elektroniker/in für Betriebstechnik (Industrial electrician)",
+    "IT & Technology: Mechatroniker/in (Mechatronics technician)",
+    "Engineering & Industry: Industriemechaniker/in (Industrial mechanic)",
+    "Engineering & Industry: Zerspanungsmechaniker/in (CNC machining)",
+    "Engineering & Industry: Konstruktionsmechaniker/in (Construction mechanic)",
+    "Engineering & Industry: Werkzeugmechaniker/in (Tool mechanic)",
+    "Engineering & Industry: Verfahrensmechaniker/in (Process mechanic)",
+    "Engineering & Industry: Technische/r Produktdesigner/in (Technical product designer)",
+    "Automotive & Transport: Kfz-Mechatroniker/in (Car mechanic & electronics)",
+    "Automotive & Transport: Berufskraftfahrer/in (Truck/Bus driver)",
+    "Automotive & Transport: Fachkraft für Lagerlogistik (Warehouse logistics)",
+    "Automotive & Transport: Speditionskaufmann/-frau (Freight forwarding clerk)",
+    "Automotive & Transport: Eisenbahner/in im Betriebsdienst (Railway operations)",
+    "Construction & Skilled Trades: Anlagenmechaniker/in SHK (Plumber/heating/air systems)",
+    "Construction & Skilled Trades: Elektroniker/in für Energie- und Gebäudetechnik (Building electrical)",
+    "Construction & Skilled Trades: Maler/in & Lackierer/in (Painter & varnisher)",
+    "Construction & Skilled Trades: Tischler/in (Carpenter)",
+    "Construction & Skilled Trades: Maurer/in (Bricklayer)",
+    "Construction & Skilled Trades: Dachdecker/in (Roofer)",
+    "Construction & Skilled Trades: Metallbauer/in (Metal construction)",
+    "Construction & Skilled Trades: Fliesenleger/in (Tiler)",
+    "Food & Hospitality: Koch/Köchin (Chef)",
+    "Food & Hospitality: Hotelfachmann/-frau (Hotel specialist)",
+    "Food & Hospitality: Restaurantfachmann/-frau (Restaurant specialist)",
+    "Food & Hospitality: Bäcker/in (Baker)",
+    "Food & Hospitality: Konditor/in (Pastry chef)",
+    "Food & Hospitality: Fleischer/in (Butcher)",
+    "Business, Office & Finance: Kaufmann/-frau für Büromanagement (Office management)",
+    "Business, Office & Finance: Industriekaufmann/-frau (Industrial management)",
+    "Business, Office & Finance: Einzelhandelskaufmann/-frau (Retail sales)",
+    "Business, Office & Finance: Verkäufer/in (Sales assistant)",
+    "Business, Office & Finance: Bankkaufmann/-frau (Bank clerk)",
+    "Business, Office & Finance: Kaufmann/-frau im E-Commerce (E-commerce management)",
+    "Business, Office & Finance: Versicherungskaufmann/-frau (Insurance clerk)",
+    "Public Service & Safety: Polizei (Ausbildung / duales Studium varies by state)",
+    "Public Service & Safety: Feuerwehr (varies by city/state)",
+    "Public Service & Safety: Fachangestellte/r für Bäderbetriebe (Lifeguard/pool operations)",
+    "Public Service & Safety: Justizfachangestellte/r (Court clerk)",
+    "Environment & Nature: Gärtner/in (Gardener)",
+    "Environment & Nature: Forstwirt/in (Forestry worker)",
+    "Environment & Nature: Landwirt/in (Farmer)",
+    "Environment & Nature: Tierpfleger/in (Animal caretaker)",
+    "Environment & Nature: Fachkraft für Kreislauf- und Abfallwirtschaft (Waste & recycling)",
+    "Media & Design: Mediengestalter/in Digital und Print (Media designer)",
+    "Media & Design: Fotograf/in (Photographer)",
+    "Media & Design: Gestalter/in für visuelles Marketing (Visual marketing designer)",
+    "Media & Design: Veranstaltungskaufmann/-frau (Event management)",
+    "High demand: Nursing (Pflege)",
+    "High demand: Warehouse logistics (Lagerlogistik)",
+    "High demand: Restaurant/Hotel (Koch, Hotelfach)",
+    "High demand: Construction trades (SHK, Elektroniker, Dachdecker)",
+    "High demand: Truck driver (Berufskraftfahrer)",
+    "High demand: IT (Fachinformatiker)",
+  ];
+
+  const studyOptions = [
+    "IT & Computer / Tech: Computer Science (Informatik)",
+    "IT & Computer / Tech: Software Engineering",
+    "IT & Computer / Tech: Data Science / Big Data",
+    "IT & Computer / Tech: Artificial Intelligence (AI)",
+    "IT & Computer / Tech: Cybersecurity / IT Security",
+    "IT & Computer / Tech: Information Systems (Wirtschaftsinformatik)",
+    "IT & Computer / Tech: Computer Engineering",
+    "IT & Computer / Tech: Robotics",
+    "IT & Computer / Tech: Cloud Computing",
+    "IT & Computer / Tech: Game Development",
+    "Engineering: Mechanical Engineering",
+    "Engineering: Electrical Engineering",
+    "Engineering: Civil Engineering",
+    "Engineering: Automotive Engineering",
+    "Engineering: Mechatronics",
+    "Engineering: Industrial Engineering",
+    "Engineering: Aerospace Engineering",
+    "Engineering: Environmental Engineering",
+    "Engineering: Chemical Engineering",
+    "Engineering: Renewable Energy Engineering",
+    "Science: Mathematics",
+    "Science: Physics",
+    "Science: Chemistry",
+    "Science: Biology",
+    "Science: Biotechnology",
+    "Science: Microbiology",
+    "Science: Geology / Earth Sciences",
+    "Science: Materials Science",
+    "Science: Environmental Science",
+    "Health & Medical: Medicine (Humanmedizin) (competitive, German required)",
+    "Health & Medical: Dentistry (Zahnmedizin) (competitive, German required)",
+    "Health & Medical: Pharmacy (Pharmazie) (competitive, German required)",
+    "Health & Medical: Public Health",
+    "Health & Medical: Nursing Science",
+    "Health & Medical: Biomedical Science",
+    "Health & Medical: Medical Engineering (Medizintechnik)",
+    "Business & Management: Business Administration (BWL)",
+    "Business & Management: International Business",
+    "Business & Management: Economics (VWL)",
+    "Business & Management: Finance & Banking",
+    "Business & Management: Accounting & Taxation",
+    "Business & Management: Marketing",
+    "Business & Management: Human Resource Management",
+    "Business & Management: Entrepreneurship",
+    "Business & Management: Supply Chain / Logistics Management",
+    "Business & Management: Business Analytics",
+    "Logistics & Transport: Logistics & Supply Chain Management",
+    "Logistics & Transport: Transportation Systems",
+    "Logistics & Transport: International Shipping / Freight Management",
+    "Logistics & Transport: Industrial Logistics",
+    "Law & Politics: Law (Rechtswissenschaft) (mostly German)",
+    "Law & Politics: International Law (some English options)",
+    "Law & Politics: Political Science",
+    "Law & Politics: International Relations",
+    "Law & Politics: Public Administration",
+    "Education & Languages: Education / Teaching (Lehramt)",
+    "Education & Languages: German Language & Literature (Germanistik)",
+    "Education & Languages: English Studies",
+    "Education & Languages: Translation & Interpretation",
+    "Education & Languages: Linguistics",
+    "Education & Languages: Special Education",
+    "Creative / Media: Media Studies",
+    "Creative / Media: Communication Studies",
+    "Creative / Media: Journalism",
+    "Creative / Media: Film & Television Studies",
+    "Creative / Media: Graphic Design / Visual Communication",
+    "Creative / Media: Animation / Multimedia Design",
+    "Creative / Media: Music / Performing Arts (audition required)",
+    "Architecture & Design: Architecture",
+    "Architecture & Design: Urban Planning",
+    "Architecture & Design: Interior Design",
+    "Architecture & Design: Landscape Architecture",
+    "Social Sciences & Humanities: Sociology",
+    "Social Sciences & Humanities: Psychology (very competitive)",
+    "Social Sciences & Humanities: Social Work",
+    "Social Sciences & Humanities: History",
+    "Social Sciences & Humanities: Philosophy",
+    "Social Sciences & Humanities: Anthropology",
+    "Social Sciences & Humanities: Geography",
+    "Agriculture & Environment: Agriculture",
+    "Agriculture & Environment: Forestry",
+    "Agriculture & Environment: Food Science",
+    "Agriculture & Environment: Environmental Management",
+    "Agriculture & Environment: Sustainable Development",
+    "Agriculture & Environment: Renewable Energy Studies",
+    "Popular English-taught: Computer Science / Data Science / AI",
+    "Popular English-taught: Engineering (Mechanical, Electrical, Mechatronics)",
+    "Popular English-taught: International Business / Economics",
+    "Popular English-taught: Renewable Energy / Sustainability",
+    "Popular English-taught: Logistics & Supply Chain",
+    "Popular English-taught: Public Health (some programs)",
+  ];
+
+  const options =
+    form.path === "Ausbildung"
+      ? ausbildungOptions
+      : form.path === "Study"
+        ? studyOptions
+        : [];
+
+  const optionsTitle =
+    form.path === "Ausbildung"
+      ? "Possible Ausbildung Options (for appointment booking)"
+      : form.path === "Study"
+        ? "Possible Study Courses (for appointment booking)"
+        : null;
+
+  const optionsNote =
+    options.length > 0
+      ? "No school or company website access is needed. Pick one option to mention when booking your appointment."
+      : null;
+
+  return { title, items, timeline, mistakes, optionsTitle, optionsNote, options };
 }
 
 function Input({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
