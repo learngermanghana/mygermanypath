@@ -1,5 +1,6 @@
 ﻿import Link from "next/link";
-import Image from "next/image";
+import FeatureCard from "@/components/cards/FeatureCard";
+import homeContent from "@/content/homepage.json";
 
 export default function Home() {
   return (
@@ -32,49 +33,8 @@ export default function Home() {
 
       {/* 3 CARDS WITH IMAGES */}
       <section className="grid gap-4 md:grid-cols-3">
-        {[
-          {
-            title: "Ausbildung",
-            desc: "Learn a skill + work in Germany with structured training.",
-            href: "/ausbildung-germany",
-            img: "/images/ausbildung.jpg",
-          },
-          {
-            title: "Study / Studienkolleg",
-            desc: "University path including preparation programs.",
-            href: "/study-germany",
-            img: "/images/study.jpg",
-          },
-          {
-            title: "Jobs in Germany",
-            desc: "Work routes, requirements, and realistic expectations.",
-            href: "/work-in-germany",
-            img: "/images/jobs.jpg",
-          },
-        ].map((c) => (
-          <Link
-            key={c.title}
-            href={c.href}
-            className="group overflow-hidden rounded-3xl border hover:bg-gray-50"
-          >
-            {/* Image */}
-            <div className="relative h-44 w-full">
-              <Image
-                src={c.img}
-                alt={c.title}
-                fill
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
-                priority
-              />
-            </div>
-
-            {/* Text */}
-            <div className="p-6">
-              <p className="text-lg font-bold">{c.title}</p>
-              <p className="mt-2 text-sm text-gray-600">{c.desc}</p>
-              <p className="mt-4 text-sm font-semibold">Explore →</p>
-            </div>
-          </Link>
+        {homeContent.featureCards.map((card) => (
+          <FeatureCard key={card.title} {...card} priority />
         ))}
       </section>
 

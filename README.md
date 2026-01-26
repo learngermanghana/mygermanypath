@@ -25,6 +25,16 @@ PAYSTACK_SECRET_KEY=your_paystack_secret
 NEXT_PUBLIC_CV_PRICE_GHS=50
 ```
 
+## Maintenance & Scalability
+
+### Automated checks
+- Run `npm run lint` for linting.
+- Run `npm test` to validate content JSON structures used by the UI.
+- The GitHub Actions workflow at `.github/workflows/ci.yml` runs both checks on every push and pull request.
+
+### Content management
+The site content in `src/content/` centralizes data like feature cards and pathway guidance. This makes it easier to swap in a headless CMS (e.g., Strapi or Contentful) later by replacing these JSON imports with CMS fetches, so non-developers can update eligibility criteria, timelines, and guidance without code changes.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
