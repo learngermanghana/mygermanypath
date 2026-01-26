@@ -121,6 +121,40 @@ export default function Page() {
       ],
     },
   ];
+  const guidance = [
+    {
+      title: "Who qualifies",
+      points: [
+        "You need a school-leaving certificate equivalent to German secondary education and a signed training contract.",
+        "The visa focuses on training fit: motivation, realistic career plan, and ability to finance living costs.",
+        "Some occupations are regulated or require health checks, especially in healthcare or childcare.",
+      ],
+    },
+    {
+      title: "German level needed",
+      points: [
+        "Most employers expect at least B1; competitive or customer-facing roles often require B2.",
+        "Healthcare and childcare typically demand B2 for safety and communication standards.",
+        "Bring a recognized certificate (Goethe/telc/ÖSD) because employers and embassies ask for proof.",
+      ],
+    },
+    {
+      title: "Timeline",
+      points: [
+        "6–12 months: language preparation, CV/cover letter in German, and shortlist companies.",
+        "3–6 months: apply, interview, and sign the training contract (Ausbildungsvertrag).",
+        "2–3 months: visa processing, arrange housing, and arrive before the August/September start.",
+      ],
+    },
+    {
+      title: "Common mistakes",
+      points: [
+        "Applying without enough German or with an incomplete contract (missing salary/start date).",
+        "Paying agencies for “guaranteed” contracts—legitimate employers never sell placements.",
+        "Underestimating living costs: training salaries can be low, so plan a realistic budget.",
+      ],
+    },
+  ];
 
   return (
     <div className="space-y-8">
@@ -161,15 +195,14 @@ export default function Page() {
       </section>
 
       <section className="grid gap-4 md:grid-cols-2">
-        {[
-          ["Who qualifies", "Basic eligibility explained in simple terms."],
-          ["German level needed", "What level you must reach (A2/B1/B2 depending)."],
-          ["Timeline", "What happens first, what takes time, and what to prepare early."],
-          ["Common mistakes", "Avoid delays, scams, and unrealistic expectations."],
-        ].map(([t, d]) => (
-          <div key={t} className="rounded-3xl border p-6">
-            <p className="text-lg font-bold">{t}</p>
-            <p className="mt-2 text-sm text-gray-600">{d}</p>
+        {guidance.map((item) => (
+          <div key={item.title} className="rounded-3xl border p-6">
+            <p className="text-lg font-bold">{item.title}</p>
+            <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-gray-600">
+              {item.points.map((point) => (
+                <li key={point}>{point}</li>
+              ))}
+            </ul>
           </div>
         ))}
       </section>
