@@ -1,11 +1,7 @@
-import dynamicImport from "next/dynamic";
+import MotivationClientEntry from "./MotivationClientEntry";
 
 export const dynamic = "force-dynamic";
 
-const MotivationClient = dynamicImport(() => import("./MotivationClient"), {
-  ssr: false,
-});
-
 export default function Page() {
-  return <MotivationClient />;
+  return <MotivationClientEntry />;
 }
