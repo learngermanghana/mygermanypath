@@ -6,7 +6,8 @@ import { LocaleProvider } from "@/components/LocaleProvider";
 import { getLocaleFromHeader, getMessages } from "@/lib/i18n";
 
 export async function generateMetadata() {
-  const locale = getLocaleFromHeader(headers().get("accept-language"));
+  const headersList = await headers();
+  const locale = getLocaleFromHeader(headersList.get("accept-language"));
   const { metadata } = getMessages(locale);
 
   return {
@@ -15,12 +16,13 @@ export async function generateMetadata() {
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const locale = getLocaleFromHeader(headers().get("accept-language"));
+  const headersList = await headers();
+  const locale = getLocaleFromHeader(headersList.get("accept-language"));
 
   return (
     <html lang={locale} suppressHydrationWarning>
