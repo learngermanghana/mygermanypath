@@ -29,6 +29,16 @@ type FormData = {
   timelineMonths: string;
 };
 
+type ChecklistData = {
+  title: string;
+  items: string[];
+  timeline: string;
+  mistakes: string[];
+  optionsTitle: string | null;
+  optionsNote: string | null;
+  options: string[];
+};
+
 export default function DocumentChecklistPage() {
   const searchParams = useSearchParams();
   const reference = searchParams.get("reference");
@@ -199,6 +209,19 @@ export default function DocumentChecklistPage() {
               </ul>
             </Block>
 
+            {checklist.options.length > 0 && checklist.optionsTitle && (
+              <Block title={checklist.optionsTitle}>
+                {checklist.optionsNote && (
+                  <p className="text-sm text-gray-600">{checklist.optionsNote}</p>
+                )}
+                <ul className="mt-2 list-disc pl-5 text-sm text-gray-700 space-y-1">
+                  {checklist.options.map((x) => (
+                    <li key={x}>{x}</li>
+                  ))}
+                </ul>
+              </Block>
+            )}
+
             <Block title="Timeline">
               <p className="text-sm text-gray-700">{checklist.timeline}</p>
             </Block>
@@ -217,7 +240,7 @@ export default function DocumentChecklistPage() {
   );
 }
 
-function buildChecklist(form: FormData) {
+function buildChecklist(form: FormData): ChecklistData {
   const title = `${form.path} — Document Checklist`;
 
   const base = [
@@ -267,7 +290,44 @@ function buildChecklist(form: FormData) {
     "No clear plan for money + timeline",
   ];
 
-  return { title, items, timeline, mistakes };
+  const ausbildungOptions = [
+    "Nursing / Pflegefachkraft",
+    "Hotel & hospitality (Hotelfachmann/-frau)",
+    "Mechatronics (Mechatroniker/-in)",
+    "IT specialist (Fachinformatiker/-in)",
+    "Electrician (Elektroniker/-in)",
+    "Automotive technician (Kfz-Mechatroniker/-in)",
+  ];
+
+  const studyOptions = [
+    "Computer Science / IT",
+    "Business Administration",
+    "Mechanical Engineering",
+    "Data Science / AI",
+    "Nursing / Public Health",
+    "Hospitality & Tourism",
+  ];
+
+  const options =
+    form.path === "Ausbildung"
+      ? ausbildungOptions
+      : form.path === "Study"
+        ? studyOptions
+        : [];
+
+  const optionsTitle =
+    form.path === "Ausbildung"
+      ? "Possible Ausbildung Options (for appointment booking)"
+      : form.path === "Study"
+        ? "Possible Study Courses (for appointment booking)"
+        : null;
+
+  const optionsNote =
+    options.length > 0
+      ? "No school or company website access is needed. Pick one option to mention when booking your appointment."
+      : null;
+
+  return { title, items, timeline, mistakes, optionsTitle, optionsNote, options };
 }
 
 function Input({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
