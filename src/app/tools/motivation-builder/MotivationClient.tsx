@@ -45,6 +45,8 @@ export default function MotivationBuilderPage() {
   const [aiMessage, setAiMessage] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
   const [aiLetter, setAiLetter] = useState<string | null>(null);
+  const [saveMessage, setSaveMessage] = useState("");
+  const [saving, setSaving] = useState(false);
 
   const [form, setForm] = useState<FormData>({
     fullName: "Felix Asadu",
@@ -152,6 +154,43 @@ export default function MotivationBuilderPage() {
     setAiLoading(false);
   }
 
+  async function saveAccountDetails() {
+    if (!form.email.includes("@")) {
+      setSaveMessage("⚠️ Please enter a valid email before saving.");
+      return;
+    }
+
+    setSaving(true);
+    setSaveMessage("Saving your details…");
+
+    const res = await fetch("/api/account/save", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: form.email,
+        fullName: form.fullName,
+        phone: form.phone,
+        nationality: form.nationality,
+        city: form.city,
+        source: "motivation-builder",
+        formData: form,
+      }),
+    });
+
+    const json = await res.json();
+
+    if (!json?.ok) {
+      setSaveMessage(
+        json?.error ? `❌ Save failed: ${json.error}` : "❌ Save failed. Please try again.",
+      );
+      setSaving(false);
+      return;
+    }
+
+    setSaveMessage("✅ Saved! We can now remember your details for future sessions.");
+    setSaving(false);
+  }
+
   function resetToTemplate() {
     setAiLetter(null);
     setAiMessage("Switched back to the standard template.");
@@ -210,6 +249,21 @@ export default function MotivationBuilderPage() {
             <Input label="Phone" value={form.phone} onChange={(v) => update("phone", v)} helper="Include country code." />
             <Input label="Nationality" value={form.nationality} onChange={(v) => update("nationality", v)} />
             <Input label="City" value={form.city} onChange={(v) => update("city", v)} />
+          </div>
+
+          <div className="rounded-2xl border bg-white p-4 text-sm">
+            <p className="font-semibold">Save your details</p>
+            <p className="mt-1 text-gray-600">
+              Store your account info securely so you can reuse it next time.
+            </p>
+            <button
+              onClick={saveAccountDetails}
+              disabled={saving}
+              className="mt-3 w-full rounded-xl bg-black px-4 py-2 font-semibold text-white hover:opacity-90 disabled:opacity-60"
+            >
+              {saving ? "Saving..." : "Save my details"}
+            </button>
+            {!!saveMessage && <p className="mt-2 text-sm text-gray-600">{saveMessage}</p>}
           </div>
 
           <div className="space-y-3">

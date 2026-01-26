@@ -25,6 +25,14 @@ PAYSTACK_SECRET_KEY=your_paystack_secret
 NEXT_PUBLIC_CV_PRICE_GHS=50
 ```
 
+Set the following variables to enable Firebase account/data storage (service account credentials):
+
+```bash
+FIREBASE_PROJECT_ID=your_firebase_project_id
+FIREBASE_CLIENT_EMAIL=your_service_account_email
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+```
+
 ## Maintenance & Scalability
 
 ### Automated checks
