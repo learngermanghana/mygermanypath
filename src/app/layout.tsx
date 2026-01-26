@@ -15,7 +15,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen bg-white text-gray-900" suppressHydrationWarning>
+      <body
+        className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-100 text-slate-900"
+        suppressHydrationWarning
+      >
         <Nav />
         <main className="mx-auto max-w-6xl px-4 py-10">{children}</main>
         <Footer />
