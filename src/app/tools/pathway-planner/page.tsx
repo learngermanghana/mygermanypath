@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type Goal = "Ausbildung" | "Study" | "Work";
 
@@ -9,6 +9,40 @@ export default function Planner() {
   const [education, setEducation] = useState<string>("SHS / WASSCE");
   const [germanLevel, setGermanLevel] = useState<string>("A1");
   const [goal, setGoal] = useState<Goal>("Ausbildung");
+  const [program, setProgram] = useState<string>("");
+
+  const ausbildungPrograms = [
+    "Nursing / Pflegefachkraft",
+    "Hotel & hospitality (Hotelfachmann/-frau)",
+    "Mechatronics (Mechatroniker/-in)",
+    "IT specialist (Fachinformatiker/-in)",
+    "Electrician (Elektroniker/-in)",
+    "Automotive technician (Kfz-Mechatroniker/-in)",
+  ];
+
+  const studyCourses = [
+    "Computer Science / IT",
+    "Business Administration",
+    "Mechanical Engineering",
+    "Data Science / AI",
+    "Nursing / Public Health",
+    "Hospitality & Tourism",
+  ];
+
+  const programOptions = useMemo(() => {
+    if (goal === "Ausbildung") return ausbildungPrograms;
+    if (goal === "Study") return studyCourses;
+    return [];
+  }, [goal]);
+
+  useEffect(() => {
+    if (programOptions.length === 0) {
+      setProgram("");
+      return;
+    }
+
+    setProgram((current) => (current && programOptions.includes(current) ? current : programOptions[0]));
+  }, [programOptions]);
 
   const result = useMemo(() => {
     let recommended = goal;
@@ -90,6 +124,23 @@ export default function Planner() {
               <option>Work</option>
             </select>
           </div>
+
+          {programOptions.length > 0 && (
+            <div>
+              <label className="text-sm font-semibold">Program / Course</label>
+              <select
+                value={program}
+                onChange={(e) => setProgram(e.target.value)}
+                className="mt-2 w-full rounded-xl border px-3 py-2"
+              >
+                {programOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
         </section>
 
         <section className="rounded-3xl border p-6 space-y-4">
@@ -99,6 +150,11 @@ export default function Planner() {
             Minimum German Level you should target:{" "}
             <span className="font-bold">{result.minGerman}</span>
           </p>
+          {program && (
+            <p className="text-gray-700">
+              Selected program/course: <span className="font-semibold">{program}</span>
+            </p>
+          )}
 
           {result.notes.length > 0 && (
             <div className="rounded-2xl bg-gray-50 p-4">
