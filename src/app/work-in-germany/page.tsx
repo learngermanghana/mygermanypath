@@ -1,6 +1,40 @@
 ﻿import Link from "next/link";
 
 export default function Page() {
+  const guidance = [
+    {
+      title: "Who qualifies",
+      points: [
+        "Skilled workers need a recognized degree or vocational qualification and a job offer that matches it.",
+        "EU Blue Card applicants must meet salary thresholds and have a recognized university degree (or an equivalent in-demand IT path).",
+        "Regulated professions (healthcare, teaching, engineering) require formal recognition before a visa is issued.",
+      ],
+    },
+    {
+      title: "German level needed",
+      points: [
+        "English-speaking tech roles can be possible, but most employers still expect at least B1 for daily work.",
+        "Regulated professions usually require B2 or higher German for licensing and patient/client communication.",
+        "For long-term integration, plan for B1/B2 even if the job ad is in English.",
+      ],
+    },
+    {
+      title: "Timeline",
+      points: [
+        "4–8 months: get qualification recognition (ZAB or the relevant chamber) and collect work experience proofs.",
+        "3–6 months: job search, interviews, and contract negotiation; ensure salary meets visa requirements.",
+        "2–3 months: visa appointment and processing, then prepare relocation (housing, Anmeldung, insurance).",
+      ],
+    },
+    {
+      title: "Common mistakes",
+      points: [
+        "Applying without recognition documents or with a job offer that does not match the qualification.",
+        "Assuming any salary qualifies for a Blue Card—thresholds change yearly and vary by shortage occupations.",
+        "Skipping language planning and later struggling with probation periods, paperwork, or client contact.",
+      ],
+    },
+  ];
   return (
     <div className="space-y-8">
       <header className="space-y-2">
@@ -11,15 +45,14 @@ export default function Page() {
       </header>
 
       <section className="grid gap-4 md:grid-cols-2">
-        {[
-          ["Who qualifies", "Basic eligibility explained in simple terms."],
-          ["German level needed", "What level you must reach (A2/B1/B2 depending)."],
-          ["Timeline", "What happens first, what takes time, and what to prepare early."],
-          ["Common mistakes", "Avoid delays, scams, and unrealistic expectations."],
-        ].map(([t, d]) => (
-          <div key={t} className="rounded-3xl border p-6">
-            <p className="text-lg font-bold">{t}</p>
-            <p className="mt-2 text-sm text-gray-600">{d}</p>
+        {guidance.map((item) => (
+          <div key={item.title} className="rounded-3xl border p-6">
+            <p className="text-lg font-bold">{item.title}</p>
+            <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-gray-600">
+              {item.points.map((point) => (
+                <li key={point}>{point}</li>
+              ))}
+            </ul>
           </div>
         ))}
       </section>
