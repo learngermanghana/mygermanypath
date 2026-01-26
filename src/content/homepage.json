@@ -1,0 +1,22 @@
+{
+  "featureCards": [
+    {
+      "title": "Ausbildung",
+      "description": "Learn a skill + work in Germany with structured training.",
+      "href": "/ausbildung-germany",
+      "imageSrc": "/images/ausbildung.jpg"
+    },
+    {
+      "title": "Study / Studienkolleg",
+      "description": "University path including preparation programs.",
+      "href": "/study-germany",
+      "imageSrc": "/images/study.jpg"
+    },
+    {
+      "title": "Jobs in Germany",
+      "description": "Work routes, requirements, and realistic expectations.",
+      "href": "/work-in-germany",
+      "imageSrc": "/images/jobs.jpg"
+    }
+  ]
+}
