@@ -42,6 +42,9 @@ export default function MotivationBuilderPage() {
   const [checking, setChecking] = useState(false);
   const [paying, setPaying] = useState(false);
   const [message, setMessage] = useState("");
+  const [aiMessage, setAiMessage] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiLetter, setAiLetter] = useState<string | null>(null);
 
   const [form, setForm] = useState<FormData>({
     fullName: "Felix Asadu",
@@ -66,7 +69,8 @@ export default function MotivationBuilderPage() {
       "Ready within 6–12 months after completing required documents and German level.",
   });
 
-  const letterText = useMemo(() => generateLetter(form), [form]);
+  const templateLetter = useMemo(() => generateLetter(form), [form]);
+  const letterText = aiLetter ?? templateLetter;
 
   // ✅ Verify Paystack after redirect
   useEffect(() => {
@@ -119,6 +123,38 @@ export default function MotivationBuilderPage() {
     }
 
     window.location.href = json.authorization_url;
+  }
+
+  async function generateWithAi() {
+    setAiLoading(true);
+    setAiMessage("Generating your AI draft…");
+
+    const res = await fetch("/api/motivation-letter", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+
+    const json = await res.json();
+
+    if (!json?.ok) {
+      setAiMessage(
+        json?.error
+          ? `❌ AI generation failed: ${json.error}`
+          : "❌ AI generation failed. Please try again.",
+      );
+      setAiLoading(false);
+      return;
+    }
+
+    setAiLetter(json.letter);
+    setAiMessage("✅ AI draft ready. Review and edit anytime.");
+    setAiLoading(false);
+  }
+
+  function resetToTemplate() {
+    setAiLetter(null);
+    setAiMessage("Switched back to the standard template.");
   }
 
   function update<K extends keyof FormData>(key: K, value: FormData[K]) {
@@ -262,9 +298,40 @@ export default function MotivationBuilderPage() {
         {/* PREVIEW */}
         <section className="rounded-3xl border p-6 space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold">Preview</h2>
-            <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">Auto-updated</span>
+            <div>
+              <h2 className="text-lg font-bold">Preview</h2>
+              <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                {aiLetter ? "AI Draft" : "Auto-updated template"}
+              </span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={generateWithAi}
+                disabled={aiLoading}
+                className="rounded-full border px-3 py-1 text-xs font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-60"
+              >
+                {aiLoading ? "Generating..." : "Generate with OpenAI"}
+              </button>
+              {aiLetter ? (
+                <button
+                  onClick={resetToTemplate}
+                  className="rounded-full border px-3 py-1 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+                >
+                  Use template
+                </button>
+              ) : null}
+            </div>
           </div>
+          {aiMessage ? (
+            <div className="rounded-2xl border bg-gray-50 p-4 text-sm text-gray-700">
+              {aiMessage}
+              {aiLetter ? (
+                <p className="mt-2 text-xs text-gray-500">
+                  Your AI draft will not auto-update when you change the form. Regenerate to refresh.
+                </p>
+              ) : null}
+            </div>
+          ) : null}
           <div className="rounded-2xl border bg-white p-6 shadow-sm">
             <pre className="whitespace-pre-wrap text-sm leading-6 text-gray-800">
 {letterText}
