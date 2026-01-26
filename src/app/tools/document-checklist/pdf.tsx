@@ -8,7 +8,15 @@ export default function ChecklistPdf({
   data,
 }: {
   fullName: string;
-  data: { title: string; items: string[]; timeline: string; mistakes: string[] };
+  data: {
+    title: string;
+    items: string[];
+    timeline: string;
+    mistakes: string[];
+    optionsTitle: string | null;
+    optionsNote: string | null;
+    options: string[];
+  };
 }) {
   return (
     <Document>
@@ -24,6 +32,15 @@ export default function ChecklistPdf({
             <Text key={x} style={styles.bullet}>• {x}</Text>
           ))}
         </Section>
+
+        {data.options.length > 0 && data.optionsTitle && (
+          <Section title={data.optionsTitle}>
+            {data.optionsNote && <Text style={styles.text}>{data.optionsNote}</Text>}
+            {data.options.map((x) => (
+              <Text key={x} style={styles.bullet}>• {x}</Text>
+            ))}
+          </Section>
+        )}
 
         <Section title="Timeline">
           <Text style={styles.text}>{data.timeline}</Text>
