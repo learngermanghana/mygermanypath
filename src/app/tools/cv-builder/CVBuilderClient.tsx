@@ -23,7 +23,10 @@ type CVData = {
   certificates: string[];
 };
 
-const PRICE_GHS = 50; // 🔥 change your price here
+type Template = "Classic" | "Modern" | "Minimal";
+
+const parsedPrice = Number.parseFloat(process.env.NEXT_PUBLIC_CV_PRICE_GHS ?? "50");
+const PRICE_GHS = Number.isFinite(parsedPrice) ? parsedPrice : 50;
 
 export const dynamic = "force-dynamic";
 
@@ -40,6 +43,7 @@ export default function CVBuilderPage() {
   const [checking, setChecking] = useState(false);
   const [paying, setPaying] = useState(false);
   const [message, setMessage] = useState<string>("");
+  const [template, setTemplate] = useState<Template>("Classic");
 
   const [data, setData] = useState<CVData>({
     fullName: "Felix Asadu",
@@ -80,25 +84,44 @@ export default function CVBuilderPage() {
       setChecking(true);
       setMessage("Verifying payment…");
 
-      const res = await fetch(`/api/paystack/verify?reference=${reference}`);
-      const json = await res.json();
+      try {
+        const res = await fetch(`/api/paystack/verify?reference=${reference}`);
+        const json = await res.json();
 
-      if (json?.ok && json?.paid) {
-        setPaid(true);
-        setMessage("✅ Payment verified! Download is unlocked.");
-      } else {
+        if (json?.ok && json?.paid) {
+          setPaid(true);
+          setMessage("✅ Payment verified! Download is unlocked.");
+        } else {
+          setPaid(false);
+          setMessage("❌ Payment not verified. Please try again.");
+        }
+      } catch (error) {
         setPaid(false);
-        setMessage("❌ Payment not verified. Please try again.");
+        setMessage("❌ Unable to verify payment. Check your connection and retry.");
+      } finally {
+        setChecking(false);
       }
-
-      setChecking(false);
     };
 
     verify();
   }, [reference]);
 
   async function payNow() {
-    if (!data.email?.includes("@")) {
+    const trimmedName = data.fullName.trim();
+    const trimmedPhone = data.phone.trim();
+    const trimmedEmail = data.email.trim();
+
+    if (!trimmedName) {
+      setMessage("⚠️ Full name is required before paying.");
+      return;
+    }
+
+    if (!trimmedPhone) {
+      setMessage("⚠️ Phone number is required before paying.");
+      return;
+    }
+
+    if (!trimmedEmail.includes("@")) {
       setMessage("⚠️ Please enter a valid email before paying.");
       return;
     }
@@ -106,23 +129,28 @@ export default function CVBuilderPage() {
     setPaying(true);
     setMessage("Redirecting to Paystack…");
 
-    const amountPesewas = PRICE_GHS * 100; // Paystack uses lowest currency unit (pesewas for GHS)
-    const res = await fetch("/api/paystack/initialize", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: data.email, amountPesewas }),
-    });
+    try {
+      const amountPesewas = Math.round(PRICE_GHS * 100); // Paystack uses lowest currency unit (pesewas for GHS)
+      const res = await fetch("/api/paystack/initialize", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: trimmedEmail, amountPesewas }),
+      });
 
-    const json = await res.json();
+      const json = await res.json();
 
-    if (!json?.ok) {
-      setMessage("❌ Paystack init failed. Check your secret key / internet.");
+      if (!json?.ok) {
+        setMessage("❌ Paystack init failed. Check your secret key / internet.");
+        setPaying(false);
+        return;
+      }
+
+      // Redirect to Paystack authorization URL
+      window.location.href = json.authorization_url;
+    } catch (error) {
+      setMessage("❌ Network error. Please check your connection and try again.");
       setPaying(false);
-      return;
     }
-
-    // Redirect to Paystack authorization URL
-    window.location.href = json.authorization_url;
   }
 
   function update<K extends keyof CVData>(key: K, value: CVData[K]) {
@@ -177,6 +205,30 @@ export default function CVBuilderPage() {
       <div className="grid gap-6 lg:grid-cols-2">
         {/* LEFT: FORM */}
         <section className="rounded-3xl border p-6 space-y-6">
+          <div className="space-y-3">
+            <h2 className="text-lg font-bold">Choose a template</h2>
+            <p className="text-sm text-gray-600">Pick a style that matches your profession.</p>
+            <div className="grid gap-3 md:grid-cols-3">
+              {(["Classic", "Modern", "Minimal"] as Template[]).map((option) => (
+                <button
+                  type="button"
+                  key={option}
+                  onClick={() => setTemplate(option)}
+                  className={`rounded-2xl border px-4 py-3 text-left text-sm transition ${
+                    template === option ? "border-black bg-black text-white" : "border-gray-200 bg-white text-gray-700 hover:border-gray-400"
+                  }`}
+                >
+                  <p className="font-semibold">{option}</p>
+                  <p className={`mt-1 text-xs ${template === option ? "text-white/80" : "text-gray-500"}`}>
+                    {option === "Classic" && "Traditional layout with bold headings."}
+                    {option === "Modern" && "Clean spacing with accent color."}
+                    {option === "Minimal" && "Simple typography and light separators."}
+                  </p>
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="space-y-1">
             <h2 className="text-lg font-bold">Profile</h2>
             <p className="text-sm text-gray-600">Start with the basics employers expect to see.</p>
@@ -250,7 +302,7 @@ export default function CVBuilderPage() {
             ) : (
               <div className="mt-4">
                 <PDFDownloadLink
-                  document={<CVPdf data={data} />}
+                  document={<CVPdf data={data} template={template} />}
                   fileName={`${safeFilename}_cv.pdf`}
                   className="block w-full rounded-xl bg-white px-4 py-2 text-center font-semibold text-black hover:opacity-90"
                 >
@@ -268,10 +320,16 @@ export default function CVBuilderPage() {
             <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">Auto-updated</span>
           </div>
 
-          <div className="rounded-2xl border bg-white p-6 shadow-sm space-y-4">
+          <div
+            className={`rounded-2xl border p-6 shadow-sm space-y-4 ${
+              template === "Modern" ? "bg-slate-50" : "bg-white"
+            }`}
+          >
             <div>
-              <p className="text-xl font-bold">{data.fullName}</p>
-              <p className="text-sm text-gray-600">{data.title}</p>
+              <p className={`text-xl font-bold ${template === "Modern" ? "text-slate-900" : "text-gray-900"}`}>
+                {data.fullName}
+              </p>
+              <p className={`text-sm ${template === "Minimal" ? "text-gray-500" : "text-gray-600"}`}>{data.title}</p>
               <p className="mt-2 text-xs text-gray-700">
                 {data.location} • {data.phone} • {data.email}
                 {data.linkedin ? ` • ${data.linkedin}` : ""}
