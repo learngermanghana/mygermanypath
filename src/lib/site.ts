@@ -1,5 +1,8 @@
-﻿export const site = {
+export const site = {
   name: "MyGermanyPath",
   domain: "www.mygermanypath.com",
-  tagline: "From Ghana & Africa to Germany â€” choose the right path (Study â€¢ Ausbildung â€¢ Work).",
+  tagline: {
+    en: "From Ghana & Africa to Germany — choose the right path (Study • Ausbildung • Work).",
+    de: "Von Ghana & Afrika nach Deutschland — wähle den richtigen Weg (Studium • Ausbildung • Arbeit).",
+  },
 };
