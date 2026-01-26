@@ -19,6 +19,8 @@ const messages = {
       ],
       cta: "Check Your Path",
       languageLabel: "Language",
+      openMenuLabel: "Open menu",
+      closeMenuLabel: "Close menu",
       languageOptions: [
         { value: "en", label: "English" },
         { value: "de", label: "Deutsch" },
@@ -56,6 +58,8 @@ const messages = {
       ],
       cta: "Weg prüfen",
       languageLabel: "Sprache",
+      openMenuLabel: "Menü öffnen",
+      closeMenuLabel: "Menü schließen",
       languageOptions: [
         { value: "en", label: "English" },
         { value: "de", label: "Deutsch" },
