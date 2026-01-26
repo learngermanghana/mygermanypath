@@ -19,11 +19,30 @@ const QUESTIONS = [
   "Are you willing to relocate and adapt to German work culture?",
 ];
 
+const GERMAN_LEVELS = [
+  {
+    level: "A2",
+    description: "Basic phrases and everyday topics like shopping and directions.",
+  },
+  {
+    level: "B1",
+    description: "Can handle routine work/study situations and simple discussions.",
+  },
+  {
+    level: "B2",
+    description: "Confident for most academic or professional requirements.",
+  },
+];
+
 export default function Readiness() {
   const [pathway, setPathway] = useState<Pathway>("Ausbildung");
   const [answers, setAnswers] = useState<boolean[]>(Array(QUESTIONS.length).fill(false));
 
   const score = useMemo(() => answers.filter(Boolean).length, [answers]);
+  const scorePercent = useMemo(
+    () => Math.round((score / QUESTIONS.length) * 100),
+    [score],
+  );
   const readiness = useMemo(() => {
     if (score >= 10) return "Ready to apply";
     if (score >= 7) return "Nearly ready";
@@ -49,6 +68,31 @@ export default function Readiness() {
           Answer 12 quick questions to see how prepared you are for your chosen pathway.
         </p>
       </header>
+
+      <section className="rounded-3xl border bg-gray-50 p-6">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="text-sm font-semibold text-gray-700">German level guide</p>
+            <p className="text-xs text-gray-500">
+              Hover or focus a level for a quick explanation.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {GERMAN_LEVELS.map((level) => (
+              <button
+                key={level.level}
+                type="button"
+                className="group relative rounded-full border bg-white px-4 py-1 text-xs font-semibold text-gray-700 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500"
+              >
+                {level.level}
+                <span className="pointer-events-none absolute -bottom-12 left-1/2 w-56 -translate-x-1/2 rounded-lg border bg-white px-3 py-2 text-xs text-gray-600 opacity-0 shadow-lg transition group-hover:opacity-100 group-focus-visible:opacity-100">
+                  {level.description}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section className="rounded-3xl border p-6 space-y-4">
         <div>
@@ -91,6 +135,19 @@ export default function Readiness() {
           <p className="text-3xl font-bold">
             {score} / {QUESTIONS.length}
           </p>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-xs text-gray-500">
+              <span>Progress</span>
+              <span>{scorePercent}%</span>
+            </div>
+            <div className="h-2 w-full rounded-full bg-gray-100">
+              <div
+                className="h-2 rounded-full bg-sky-500 transition-all"
+                style={{ width: `${scorePercent}%` }}
+                aria-hidden="true"
+              />
+            </div>
+          </div>
           <p className="text-gray-700">{readiness}</p>
           <p className="text-sm text-gray-600">
             Recommendation: <span className="font-semibold">{recommendation}</span>

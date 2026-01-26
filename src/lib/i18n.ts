@@ -13,6 +13,7 @@ const messages = {
         { href: "/studienkolleg", label: "Studienkolleg" },
         { href: "/work-in-germany", label: "Work" },
         { href: "/tools", label: "Tools" },
+        { href: "/help", label: "Help & FAQ" },
         { href: "/learn-german", label: "Learn German" },
         { href: "/guidance", label: "Guidance" },
       ],
@@ -27,6 +28,7 @@ const messages = {
       links: [
         { href: "/about", label: "About" },
         { href: "/success", label: "Success" },
+        { href: "/help", label: "Help & FAQ" },
         { href: "/contact", label: "Contact" },
         { href: "/germany-partner", label: "Germany Partner" },
       ],
@@ -48,6 +50,7 @@ const messages = {
         { href: "/studienkolleg", label: "Studienkolleg" },
         { href: "/work-in-germany", label: "Arbeit" },
         { href: "/tools", label: "Tools" },
+        { href: "/help", label: "Hilfe & FAQ" },
         { href: "/learn-german", label: "Deutsch lernen" },
         { href: "/guidance", label: "Beratung" },
       ],
@@ -62,6 +65,7 @@ const messages = {
       links: [
         { href: "/about", label: "Über uns" },
         { href: "/success", label: "Erfolgsgeschichten" },
+        { href: "/help", label: "Hilfe & FAQ" },
         { href: "/contact", label: "Kontakt" },
         { href: "/germany-partner", label: "Partner in Deutschland" },
       ],
