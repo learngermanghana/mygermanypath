@@ -1,11 +1,7 @@
-import dynamicImport from "next/dynamic";
+import ChecklistClientEntry from "./ChecklistClientEntry";
 
 export const dynamic = "force-dynamic";
 
-const ChecklistClient = dynamicImport(() => import("./ChecklistClient"), {
-  ssr: false,
-});
-
 export default function Page() {
-  return <ChecklistClient />;
+  return <ChecklistClientEntry />;
 }
