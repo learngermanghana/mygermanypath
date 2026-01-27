@@ -38,22 +38,56 @@ export default function Home() {
         ))}
       </section>
 
-      {/* HOW IT WORKS */}
+      {/* CREDENTIALS ASSESSMENT */}
       <section className="rounded-3xl border p-8">
-        <h2 className="text-2xl font-bold">How it works</h2>
-        <ol className="mt-4 grid gap-4 md:grid-cols-4">
-          {[
-            "Check your path",
-            "See requirements",
-            "Prepare (German + documents)",
-            "Apply with confidence",
-          ].map((s, i) => (
-            <li key={s} className="rounded-2xl bg-gray-50 p-4">
-              <p className="text-sm font-semibold">Step {i + 1}</p>
-              <p className="mt-2 text-sm text-gray-700">{s}</p>
-            </li>
-          ))}
-        </ol>
+        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-sky-600">
+              Credentials Evaluation &amp; Assessment
+            </p>
+            <h2 className="mt-2 text-2xl font-bold">
+              Credentials Evaluation &amp; Assessment (Recommended Start)
+            </h2>
+            <p className="mt-3 text-sm text-gray-600">
+              Credentials Evaluation &amp; Assessment so we choose the right path before you apply.
+            </p>
+            <ul className="mt-4 space-y-3 text-sm text-gray-700">
+              <li>
+                <span className="font-semibold">Visa options analysis:</span> Compare relevant
+                visa categories against your background and goals
+              </li>
+              <li>
+                <span className="font-semibold">Approval strategy:</span> Identify gaps and quick
+                ways to strengthen your case
+              </li>
+              <li>
+                <span className="font-semibold">Step-by-step roadmap:</span> Clear stages,
+                timelines, and requirements
+              </li>
+              <li>
+                <span className="font-semibold">Transparent costs:</span> Breakdown of
+                professional fees and government charges
+              </li>
+            </ul>
+            <p className="mt-4 text-sm text-gray-600">
+              This assessment gives you clarity and a strong foundation to move forward
+              successfully.
+            </p>
+            <Link
+              href="/assessment"
+              className="mt-6 inline-flex rounded-2xl bg-black px-6 py-3 text-sm font-semibold text-white hover:opacity-90"
+            >
+              Book Assessment
+            </Link>
+          </div>
+          <div className="overflow-hidden rounded-2xl border bg-gray-50">
+            <img
+              src="/images/pexels-tima-miroshnichenko-7010095.jpg"
+              alt="Consultant reviewing documents with a client"
+              className="h-full w-full object-cover"
+            />
+          </div>
+        </div>
       </section>
 
       {/* PROGRESS & ACCOUNTS */}
