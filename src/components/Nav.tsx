@@ -46,7 +46,7 @@ export default function Nav() {
             ))}
           </select>
           <Link
-            href="/tools/pathway-planner"
+            href="/contact"
             className="rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700"
           >
             {messages.nav.cta}
@@ -116,7 +116,7 @@ export default function Nav() {
               ))}
             </select>
             <Link
-              href="/tools/pathway-planner"
+              href="/contact"
               className="rounded-xl bg-sky-600 px-4 py-2 text-center text-sm font-semibold text-white shadow-sm transition hover:bg-sky-700"
               onClick={() => setIsOpen(false)}
             >

@@ -38,13 +38,13 @@ export default function Page() {
       <section className="rounded-3xl border p-8">
         <h2 className="text-xl font-bold">Next Step</h2>
         <p className="mt-2 text-sm text-gray-600">
-          Use the Planner to check if this pathway fits your profile.
+          Want help confirming your match or preparing the right documents? We can review your case.
         </p>
         <Link
-          href="/tools/pathway-planner"
+          href="/contact"
           className="mt-4 inline-block rounded-2xl bg-black px-6 py-3 text-white font-semibold hover:opacity-90"
         >
-          Check if this path fits you
+          Contact us
         </Link>
       </section>
     </div>
