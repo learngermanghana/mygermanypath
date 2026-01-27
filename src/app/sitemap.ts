@@ -7,18 +7,10 @@ const routes = [
   "/ausbildung-germany",
   "/contact",
   "/germany-partner",
-  "/guidance",
   "/help",
   "/learn-german",
-  "/studienkolleg",
   "/study-germany",
   "/success",
-  "/tools",
-  "/tools/cv-builder",
-  "/tools/document-checklist",
-  "/tools/motivation-builder",
-  "/tools/pathway-planner",
-  "/tools/readiness-test",
   "/work-in-germany",
 ];
 
