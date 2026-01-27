@@ -7,6 +7,10 @@ export default function Home() {
     <div className="space-y-12">
       {/* HERO */}
       <section className="rounded-3xl border p-8 md:p-12">
+        <p className="text-xs font-semibold uppercase tracking-wide text-sky-600">
+          Germany-based Education Advisor &amp; Global Mobility Consultant
+        </p>
+        <p className="mt-2 text-sm text-gray-600">Operating as a registered business in Germany</p>
         <h1 className="text-3xl font-bold md:text-5xl">
           From Ghana & Africa to Germany — choose the right path
           <span className="block text-gray-600 text-lg md:text-xl mt-3">
@@ -36,6 +40,49 @@ export default function Home() {
         {homeContent.featureCards.map((card) => (
           <FeatureCard key={card.title} {...card} priority />
         ))}
+      </section>
+
+      {/* CREDENTIALS ASSESSMENT */}
+      <section className="rounded-3xl border p-8 md:p-10">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold uppercase tracking-wide text-sky-600">
+              Start with clarity
+            </p>
+            <h2 className="mt-2 text-2xl font-bold">
+              Credentials Evaluation &amp; Assessment (Recommended Start)
+            </h2>
+            <p className="mt-3 text-sm text-gray-600">
+              I recommend beginning with a Credentials Evaluation &amp; Assessment so we choose
+              the right path before you apply.
+            </p>
+            <ul className="mt-4 space-y-3 text-sm text-gray-700">
+              {[
+                "Visa options analysis: Compare relevant visa categories against your background and goals",
+                "Approval strategy: Identify gaps and quick ways to strengthen your case",
+                "Step-by-step roadmap: Clear stages, timelines, and requirements",
+                "Transparent costs: Breakdown of professional fees and government charges",
+              ].map((item) => (
+                <li key={item} className="flex gap-2">
+                  <span className="mt-1 h-1.5 w-1.5 rounded-full bg-sky-500" aria-hidden="true" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-4 text-sm text-gray-600">
+              This assessment gives you clarity and a strong foundation to move forward
+              successfully.
+            </p>
+          </div>
+          <div className="flex">
+            <Link
+              href="/contact"
+              className="rounded-2xl bg-black px-6 py-3 text-center text-sm font-semibold text-white hover:opacity-90"
+            >
+              Book Assessment
+            </Link>
+          </div>
+        </div>
       </section>
 
       {/* HOW IT WORKS */}
