@@ -8,10 +8,10 @@ export default function Home() {
       {/* HERO */}
       <section className="rounded-3xl border p-8 md:p-12">
         <h1 className="text-3xl font-bold md:text-5xl">
-          From Ghana & Africa to Germany — choose the right path
+          From Africa to Europe — choose the right path
           <span className="block text-gray-600 text-lg md:text-xl mt-3">
-            Study • Ausbildung • Work — clear requirements, real timelines,
-            honest guidance.
+            Germany • Netherlands • Belgium • Austria — Study • Ausbildung •
+            Work with clear requirements, real timelines, honest guidance.
           </span>
         </h1>
 
