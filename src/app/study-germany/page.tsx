@@ -129,10 +129,12 @@ export default function Page() {
           review.
         </p>
         <Link
-          href="/contact"
+          href="https://wa.me/4917620721491"
+          target="_blank"
+          rel="noreferrer"
           className="mt-4 inline-block rounded-2xl bg-black px-6 py-3 text-white font-semibold hover:opacity-90"
         >
-          Talk to us
+          Talk to us on WhatsApp
         </Link>
       </section>
     </div>
