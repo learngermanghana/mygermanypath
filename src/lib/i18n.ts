@@ -13,6 +13,8 @@ const messages = {
         { href: "/work-in-germany", label: "Work" },
         { href: "/help", label: "Help & FAQ" },
         { href: "/learn-german", label: "Learn German" },
+        { href: "/about", label: "About & Founder" },
+        { href: "/contact", label: "Contact" },
       ],
       cta: "Contact us",
       languageLabel: "Language",
@@ -25,8 +27,7 @@ const messages = {
     },
     footer: {
       links: [
-        { href: "/about", label: "About" },
-        { href: "/founder", label: "Founder" },
+        { href: "/about", label: "About & Founder" },
         { href: "/success", label: "Success" },
         { href: "/help", label: "Help & FAQ" },
         { href: "/contact", label: "Contact" },
@@ -50,6 +51,8 @@ const messages = {
         { href: "/work-in-germany", label: "Arbeit" },
         { href: "/help", label: "Hilfe & FAQ" },
         { href: "/learn-german", label: "Deutsch lernen" },
+        { href: "/about", label: "Über uns & Gründerin" },
+        { href: "/contact", label: "Kontakt" },
       ],
       cta: "Kontakt",
       languageLabel: "Sprache",
@@ -62,8 +65,7 @@ const messages = {
     },
     footer: {
       links: [
-        { href: "/about", label: "Über uns" },
-        { href: "/founder", label: "Gründerin" },
+        { href: "/about", label: "Über uns & Gründerin" },
         { href: "/success", label: "Erfolgsgeschichten" },
         { href: "/help", label: "Hilfe & FAQ" },
         { href: "/contact", label: "Kontakt" },
