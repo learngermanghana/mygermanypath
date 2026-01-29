@@ -82,6 +82,25 @@ export default function About() {
         </div>
       </section>
 
+      <section className="grid gap-8 rounded-3xl border bg-gray-50 p-6 lg:grid-cols-[1fr_2fr] lg:items-center">
+        <div className="overflow-hidden rounded-2xl border bg-white shadow-sm">
+          <img
+            src="/images/WhatsApp%20Image%202026-01-29%20at%2019.52.04.jpeg"
+            alt="Founder of Pirus Consultancy"
+            className="h-full w-full object-cover"
+          />
+        </div>
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-teal-600">Founder</p>
+          <h2 className="mt-3 text-2xl font-bold text-gray-900">Meet our founder</h2>
+          <p className="mt-3 text-sm text-gray-600">
+            Pirus Consultancy is led by a founder committed to honest guidance and practical preparation for every
+            Germany journey. We believe in clear expectations, thoughtful planning, and support that respects each
+            client&apos;s goals.
+          </p>
+        </div>
+      </section>
+
       <section className="rounded-3xl border p-6">
         <h2 className="text-xl font-bold text-gray-900">Ethics & transparency</h2>
         <p className="mt-3 text-sm text-gray-600">
