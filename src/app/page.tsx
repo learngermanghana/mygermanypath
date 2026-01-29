@@ -117,46 +117,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SUCCESS STORIES */}
-      <section className="rounded-3xl border p-8">
-        <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-          <div>
-            <h2 className="text-2xl font-bold">Success stories in progress</h2>
-            <p className="text-sm text-gray-600">
-              Real people moving from A2 to B2, securing internships, and finalizing documents.
-            </p>
-          </div>
-          <Link href="/success" className="text-sm font-semibold text-sky-600">
-            See all stories →
-          </Link>
-        </div>
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
-          {[
-            { title: "Ama — A2 to B1", note: "Now ready for Ausbildung interviews.", value: 70 },
-            { title: "Kwame — B1 to B2", note: "Booked TestDaF for next quarter.", value: 55 },
-            { title: "Esi — Work pathway", note: "CV + documents submitted.", value: 85 },
-          ].map((story) => (
-            <div key={story.title} className="rounded-2xl border bg-gray-50 p-5">
-              <p className="font-semibold">{story.title}</p>
-              <p className="mt-1 text-xs text-gray-600">{story.note}</p>
-              <div className="mt-4 space-y-2">
-                <div className="flex items-center justify-between text-xs text-gray-500">
-                  <span>Progress</span>
-                  <span>{story.value}%</span>
-                </div>
-                <div className="h-2 w-full rounded-full bg-white">
-                  <div
-                    className="h-2 rounded-full bg-emerald-500"
-                    style={{ width: `${story.value}%` }}
-                    aria-hidden="true"
-                  />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* HELP */}
       <section className="rounded-3xl border bg-slate-900 p-8 text-white">
         <h2 className="text-2xl font-bold">Need quick answers?</h2>
