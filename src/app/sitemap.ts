@@ -6,6 +6,7 @@ const routes = [
   "/about",
   "/ausbildung-germany",
   "/contact",
+  "/founder",
   "/germany-partner",
   "/help",
   "/learn-german",
