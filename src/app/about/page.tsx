@@ -1,3 +1,7 @@
+import Image from "next/image";
+
+import founderPortrait from "../../../public/images/WhatsApp Image 2026-01-29 at 19.52.04.jpeg";
+
 export default function About() {
   return (
     <div className="space-y-10">
@@ -79,6 +83,26 @@ export default function About() {
               <p className="text-gray-600">Business visa strategy, documentation, and market research support.</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="grid gap-8 rounded-3xl border bg-gray-50 p-6 lg:grid-cols-[1fr_2fr] lg:items-center">
+        <div className="overflow-hidden rounded-2xl border bg-white shadow-sm">
+          <Image
+            src={founderPortrait}
+            alt="Founder of Pirus Consultancy"
+            className="h-full w-full object-cover"
+            priority
+          />
+        </div>
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-teal-600">Founder</p>
+          <h2 className="mt-3 text-2xl font-bold text-gray-900">Meet our founder</h2>
+          <p className="mt-3 text-sm text-gray-600">
+            Pirus Consultancy is led by a founder committed to honest guidance and practical preparation for every
+            Germany journey. We believe in clear expectations, thoughtful planning, and support that respects each
+            client&apos;s goals.
+          </p>
         </div>
       </section>
 
