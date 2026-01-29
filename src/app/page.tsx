@@ -8,34 +8,61 @@ export default function Home() {
       {/* HERO */}
       <section className="rounded-3xl border p-8 md:p-12">
         <h1 className="text-3xl font-bold md:text-5xl">
-          From Africa to Europe — choose the right path
+          Global Mobility &amp; Education Advisory
           <span className="block text-gray-600 text-lg md:text-xl mt-3">
-            Germany • Netherlands • Belgium • Austria — Study • Ausbildung •
-            Work with clear requirements, real timelines, honest guidance.
+            Admissions and visa support for students and business travelers across multiple
+            destinations.
           </span>
         </h1>
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <Link
-            href="/study-germany"
+            href="/contact"
             className="rounded-2xl bg-black px-6 py-3 text-center text-white font-semibold hover:opacity-90"
           >
-            Study & Studienkolleg
+            Book a consultation
           </Link>
           <Link
-            href="/learn-german"
+            href="/help"
             className="rounded-2xl border px-6 py-3 text-center font-semibold hover:bg-gray-50"
           >
-            Learn German (Falowen)
+            Explore resources
           </Link>
         </div>
       </section>
 
-      {/* 3 CARDS WITH IMAGES */}
-      <section className="grid gap-4 md:grid-cols-3">
+      {/* SERVICE CARDS */}
+      <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {homeContent.featureCards.map((card) => (
           <FeatureCard key={card.title} {...card} priority />
         ))}
+      </section>
+
+      {/* WHO WE HELP */}
+      <section className="rounded-3xl border p-8">
+        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div>
+            <h2 className="text-2xl font-bold">Who we help</h2>
+            <p className="mt-3 text-sm text-gray-600">
+              We are a Germany-based Global Mobility Consultant and Education Advisor supporting
+              students and professionals with admissions planning for destinations worldwide. We
+              also provide visa application support specifically for Europe (Schengen) and
+              Australia. Our work focuses on clear strategy, accurate documentation, and
+              step-by-step guidance from the initial assessment to a submission-ready application
+              file.
+            </p>
+          </div>
+          <div className="rounded-2xl border bg-gray-50 p-6">
+            <p className="text-sm font-semibold uppercase tracking-wide text-sky-600">
+              Primary audiences
+            </p>
+            <ul className="mt-4 space-y-3 text-sm text-gray-700">
+              <li>Students &amp; Parents</li>
+              <li>Graduates &amp; Young Professionals</li>
+              <li>Business Owners &amp; Entrepreneurs</li>
+            </ul>
+          </div>
+        </div>
       </section>
 
       {/* CREDENTIALS ASSESSMENT */}

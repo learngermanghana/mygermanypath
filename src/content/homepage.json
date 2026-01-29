@@ -1,22 +1,28 @@
 {
   "featureCards": [
     {
-      "title": "Ausbildung",
-      "description": "Learn a skill + work in Germany with structured training.",
-      "href": "/ausbildung-germany",
-      "imageSrc": "/images/ausbildung.jpg"
-    },
-    {
-      "title": "Study / Studienkolleg",
-      "description": "University path including preparation programs.",
-      "href": "/study-germany",
+      "title": "Study Abroad Admissions",
+      "description": "Admissions planning and school selection across global destinations.",
+      "href": "/study-abroad-admissions",
       "imageSrc": "/images/study.jpg"
     },
     {
-      "title": "Jobs in Germany",
-      "description": "Work routes, requirements, and realistic expectations.",
-      "href": "/work-in-germany",
+      "title": "Student Visa Support",
+      "description": "Document-ready visa applications for student pathways.",
+      "href": "/student-visa-support",
+      "imageSrc": "/images/ausbildung.jpg"
+    },
+    {
+      "title": "Business & Trade Visas (Schengen)",
+      "description": "Short-stay business travel strategy for Europe (Schengen).",
+      "href": "/business-trade-visas",
       "imageSrc": "/images/jobs.jpg"
+    },
+    {
+      "title": "Australia Business Visa",
+      "description": "Guidance for business travel and documentation to Australia.",
+      "href": "/australia-business-visa",
+      "imageSrc": "/images/pexels-tima-miroshnichenko-7010095.jpg"
     }
   ]
 }
