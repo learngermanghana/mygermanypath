@@ -36,7 +36,7 @@ const messages = {
         "⚠️ Transparency: We provide guidance & preparation support. We do not promise visas or guaranteed jobs.",
     },
     metadata: {
-      title: "MyGermanyPath",
+      title: "MyGermanyPath — Study, Ausbildung, and Work Guidance",
       description:
         "Study, Ausbildung, and Work guidance for Germany — with real steps, not false promises.",
     },
@@ -73,7 +73,7 @@ const messages = {
         "⚠️ Transparenz: Wir bieten Beratung und Vorbereitung. Wir versprechen keine Visa oder garantierten Jobs.",
     },
     metadata: {
-      title: "MyGermanyPath",
+      title: "MyGermanyPath — Beratung zu Studium, Ausbildung und Arbeit",
       description:
         "Beratung zu Studium, Ausbildung und Arbeit in Deutschland — mit echten Schritten statt leeren Versprechen.",
     },
